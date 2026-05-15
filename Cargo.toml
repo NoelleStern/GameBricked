@@ -1,0 +1,12 @@
+[package]
+name = "game-bricked"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = "0.4.44"
+clap = "4.6.1"
+color-eyre = "0.6.5"
+log = "0.4.29"
+minifb = "0.28.0"
+simplelog = "0.12.2"
