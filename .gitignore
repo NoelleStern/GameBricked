@@ -1,0 +1,17 @@
+/gameboy-doctor
+/target
+/dist
+/roms
+
+/README.pdf
+/README.html
+
+Cargo.lock
+
+/*.mp4
+/*.txt
+
+*.log
+
+*.rgb8
+*.rawA16
