@@ -1,12 +1,44 @@
 [package]
 name = "game-bricked"
-version = "0.1.0"
+version = "0.2.0"
+authors = ["Noelle Stern"]
+license = "AGPL-3.0"
+readme = "README.md"
+description = "A small emulator made of many bricks"
+repository = "https://github.com/NoelleStern/GameBricked"
 edition = "2024"
 
+# Common dependencies
 [dependencies]
-chrono = "0.4.44"
-clap = "4.6.1"
-color-eyre = "0.6.5"
-log = "0.4.29"
-minifb = "0.28.0"
-simplelog = "0.12.2"
+blip_buf = "0.1.6"                                              # Audio helper
+bytemuck = "1.25.0"                                             # Basically a WGPU rendering pipeline dependency
+color-eyre = "0.6.5"                                            # Simplifies error reporting
+eframe = { version = "0.34.2", features = ["persistence"] }     # The framework
+egui-toast = "0.20.0"                                           # Tasty toasts library
+gilrs = "0.11.1"                                                # Controller support
+hex = "0.4.3"                                                   # Go-to hex manipulation library
+instant = "0.1.13"                                              # Web-friendly instant
+rfd = "0.17.2"                                                  # Native file dialog
+rtrb = "0.3.4"                                                  # Audio ring buffer
+serde = { version = "1.0.228", features = ["derive"] }          # Serde 
+sha2 = "0.11.0"                                                 # SHA256 checksum calculator
+smart-default = "0.7.1"                                         # Better #[derive(Default)]
+tinyaudio = "2.0.0"                                             # Audio output library
+
+# Desktop dependencies
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+chrono = "0.4.44"                                               # Used exclusively to name FFmpeg files
+clap = { version = "4.6.1", features = ["derive"] }             # CLI argument parser
+image = "0.25.10"                                               # Utils image loader
+imagequant = "4.4.1"                                            # Utils image quantization library
+pollster = "0.4.0"                                              # A minimal async executor
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+
+# Web dependencies
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+instant = { version = "0.1.13", features = ["wasm-bindgen"] }   # Turn on web-specific features
+log = "0.4.32"                                                  # Logger
+wasm-bindgen = "0.2.122"                                        # WASM binding generator
+wasm-bindgen-futures = "0.4.72"                                 # JavaScript Promise handler 
+web-sys = "0.3.99"                                              # "Raw API bindings for Web APIs"
