@@ -590,9 +590,7 @@ What an amazing piece of software.
 
 ## Brick 2 - Joypad 🕹️
 
-I wanted to play that Tetris as soon as possible, but my excitement didn't last long. Upon loading the game into memory I was greeted with this so very non-epilepsy-friendly screen:
-
-<video src="https://raw.githubusercontent.com/NoelleStern/GameBricked/main/assets/FirstTetrisResults.mp4" controls></video>
+I wanted to play that Tetris as soon as possible, but my excitement didn't last long. Upon loading the game into memory I was greeted with [this so very non-epilepsy-friendly screen](./assets/FirstTetrisResults.mp4).
 
 Seeing the copyright for half a second is cool and all, but otherwise I had no idea what was going on. Something had to be awfully wrong! Luckily for me, I decided to search about the issue on the web and it ended up being rather common! Turns out, it's actually a feature! Tetris resets like that in case it registers buttons <kbd>A</kbd>, <kbd>B</kbd>, <kbd>Select</kbd> and <kbd>Start</kbd> all pressed at the same time. Why does the game think all buttons are pressed though? Isn't it weird? We should be outputting zeroes, right? And here's where you'd be wrong! Input logical values are actually reversed - <kbd>0</kbd> represents pressed state and <kbd>1</kbd> represents button being released. And so the easiest fix you can apply is to force value <kbd>0xFF</kbd> at `0xFF00` - the joypad register.
 
