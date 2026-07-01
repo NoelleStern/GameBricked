@@ -4,7 +4,7 @@
 
 **GameBoy**, DMG-01, game brick, no matter what you call it, its name brings joy and a bunch of sweet memories. Even thought this system predates me quite a bit, it's legacy echoes trough the gaming industry till this very day. Kirby, Pokemon, Tetris. Everybody knows these games. And they all have found first success on the GameBoy. It's hard not to see the influence of the grandpa of handheld gaming, even if it eats through 4 AA Batteries at a time. Keeping all of that in mind, it's hard not to adore this technological marvel of a handheld.
 
-I'm Noelle Stern and on this page I want to tell a story of building my own cozy little emulator.
+I'm Noelle Stern and on this page I want to tell a story of building [my own cozy little emulator](https://noellestern.github.io/GameBricked/).
 
 - [Game Bricked 🧱](#game-bricked-)
   - [How did I even end up here? 📍](#how-did-i-even-end-up-here-)
