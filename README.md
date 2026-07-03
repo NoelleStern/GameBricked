@@ -27,6 +27,11 @@ I'm Noelle Stern and on this page I want to tell a story of building [my own coz
   - [Brick 5 - Object Attribute Memory 🏷️](#brick-5---object-attribute-memory-️)
   - [Brick 6 - Advanced architecture 🚀](#brick-6---advanced-architecture-)
 
+[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org/)
+![WebAssembly](https://img.shields.io/badge/webassembly-%23654FF0.svg?style=for-the-badge&logo=webassembly&logoColor=white)<br>
+![WebGPU](https://img.shields.io/badge/WebGPU-enabled-blue?logo=webgpu)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 ## How did I even end up here? 📍
 
 Recently I've stumbled upon [this YouTube video](https://www.youtube.com/watch?v=hy2yY5a1Z-0) suggesting viewers try building their own **GameBoy emulator**. I was always interested in retro tech and so I immediately thought it'd be a good sport worth trying. Original GameBoy also know as DMG-01 seems at the same time **simple and complex** enough to give almost any programmer some nice challenge. And I love a good challenge.
