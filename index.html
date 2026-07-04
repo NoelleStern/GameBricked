@@ -7,7 +7,27 @@
         <!-- Disable zooming -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         
-        <title>Game Bricked</title>
+        <title>Game Bricked - A Game Boy Emulator for Desktop and Web</title>
+
+
+        <!-- Basic SEO -->
+        <meta name="description" content="A Game Boy emulator made with love brick by brick.">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="Game Bricked">
+        <meta property="og:description" content="A Game Boy emulator made with love brick by brick">
+        <meta property="og:image" content="https://NoelleStern.github.io/GameBricked/assets/previews/preview-opengraph.png">
+        <meta property="og:url" content="https://NoelleStern.github.io/">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="Noelle's dwelling">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Game Bricked">
+        <meta name="twitter:description" content="A Game Boy emulator made with love brick by brick">
+        <meta name="twitter:image" content="https://NoelleStern.github.io/GameBricked/assets/previews/preview-twitter.png">
+        <meta name="twitter:site" content="@NoelleSternchen">
+
 
         <!-- Config for our rust wasm binary. Go to https://trunkrs.dev/assets/#rust for more customization -->
         <link data-trunk rel="rust" data-wasm-opt="2" />
@@ -16,7 +36,9 @@
 
         <link data-trunk rel="icon" href="assets/website/favicon.ico">
 
-
+        <!-- Public folder vite style -->
+        <link data-trunk rel="copy-dir" href="assets/website/public" data-target-path="assets"/>
+        <!-- Other files -->
         <link data-trunk rel="copy-file" href="assets/website/sw.js"/>
         <link data-trunk rel="copy-file" href="assets/website/manifest.json"/>
         <link data-trunk rel="copy-file" href="assets/website/favicon-192x192.png" data-target-path="assets/website"/>
