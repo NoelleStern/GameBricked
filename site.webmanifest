@@ -1,0 +1,35 @@
+{
+    "name": "Game Bricked",
+    "short_name": "Game Bricked",
+    "description": "A Game Boy emulator made with love brick by brick",
+    "start_url": "/GameBricked/",
+    "display": "standalone",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "icons": [
+        {
+            "src": "assets/website/favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/website/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "assets/screenshots/wide1.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "assets/screenshots/wide2.png",
+            "sizes": "1920x1080",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+  ]
+}
