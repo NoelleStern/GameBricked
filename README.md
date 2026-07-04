@@ -2,7 +2,7 @@
 
 *"A story of one small emulator and many bricks it takes for it to run a game."*
 
-**GameBoy**, DMG-01, game brick, no matter what you call it, its name brings joy and a bunch of sweet memories. Even thought this system predates me quite a bit, it's legacy echoes trough the gaming industry till this very day. Kirby, Pokemon, Tetris. Everybody knows these games. And they all have found first success on the GameBoy. It's hard not to see the influence of the grandpa of handheld gaming, even if it eats through 4 AA Batteries at a time. Keeping all of that in mind, it's hard not to adore this technological marvel of a handheld.
+**Game Boy**, DMG-01, game brick, no matter what you call it, its name brings joy and a bunch of sweet memories. Even thought this system predates me quite a bit, it's legacy echoes trough the gaming industry till this very day. Kirby, Pokemon, Tetris. Everybody knows these games. And they all have found first success on the Game Boy. It's hard not to see the influence of the grandpa of handheld gaming, even if it eats through 4 AA Batteries at a time. Keeping all of that in mind, it's hard not to adore this technological marvel of a handheld.
 
 I'm Noelle Stern and on this page I want to tell a story of building [my own cozy little emulator](https://noellestern.github.io/GameBricked/).
 
@@ -34,12 +34,12 @@ I'm Noelle Stern and on this page I want to tell a story of building [my own coz
 
 ## How did I even end up here? 📍
 
-Recently I've stumbled upon [this YouTube video](https://www.youtube.com/watch?v=hy2yY5a1Z-0) suggesting viewers try building their own **GameBoy emulator**. I was always interested in retro tech and so I immediately thought it'd be a good sport worth trying. Original GameBoy also know as DMG-01 seems at the same time **simple and complex** enough to give almost any programmer some nice challenge. And I love a good challenge.
+Recently I've stumbled upon [this YouTube video](https://www.youtube.com/watch?v=hy2yY5a1Z-0) suggesting viewers try building their own **Game Boy emulator**. I was always interested in retro tech and so I immediately thought it'd be a good sport worth trying. Original Game Boy also know as DMG-01 seems at the same time **simple and complex** enough to give almost any programmer some nice challenge. And I love a good challenge.
 
 **Emulation** generally is a fascinating phenomenon to me. Forcing something made for an entirely different system work on another is almost like **magic**.<br>
 *(Insert an Umineko joke here)*
 
-And just like that, I decided to give it a fair shot! Luckily, for anyone embarking on this journey, the game brick is one of the most well documented pieces of hardware ever. There are obscure forums, stray personal web pages, random github projects, good old youtube videos and entire discord servers all documenting GameBoy's inner workings in one way or another. Some focus on the actual hardware, while other report about emulator development.
+And just like that, I decided to give it a fair shot! Luckily, for anyone embarking on this journey, the game brick is one of the most well documented pieces of hardware ever. There are obscure forums, stray personal web pages, random github projects, good old youtube videos and entire discord servers all documenting Game Boy's inner workings in one way or another. Some focus on the actual hardware, while other report about emulator development.
 
 The most useful webpages in my opinion are the following:
 - [Pan Docs](https://gbdev.io/pandocs/) and [Emulator Development](https://gbdev.io/resources.html#emulator-development)
@@ -76,13 +76,13 @@ assert_eq!(true, overflow_flag);
 
 I feel like making an emulator in Rust became somewhat of a mainstream lately, so you can be the one to go against the trends and do it in a harder better faster stronger way. You're free to use most any other programming language to get the job done as well.
 
-That being out of the way, the first thing I actually had to do is to learn a little about the GameBoy. To initially familiarize myself with the core concepts I've watched [Ryan Levick: Oh Boy!](https://www.youtube.com/watch?v=B7seNuQncvU) RustFest conference talk.
+That being out of the way, the first thing I actually had to do is to learn a little about the Game Boy. To initially familiarize myself with the core concepts I've watched [Ryan Levick: Oh Boy!](https://www.youtube.com/watch?v=B7seNuQncvU) RustFest conference talk.
 
 Retroactively, even though I didn't watch it at that point yet, I can really recommend [The Ultimate Game Boy Talk](https://www.youtube.com/watch?v=HyzD8pNlpwI). It's an amazing breakdown featuring some great visuals of all of the important things you'll be interacting with on your way.
 
 I said "learn a little", but prepare to learn a lot. To make an emulator you have to know the inner workings of the source system almost religiously. To a point you could be be suddenly woken up in the middle of the night and answer what flag register does, for example. It's somewhat of an exaggeration, but the amount of information is quite baffling. All of the console systems are deeply interwoven together and it doesn't make it easier either. But it's a part of the fun as well! Seeing all of the separate code pieces come together brings a lot of joy.
 
-For all intents and purposes, **GameBoy is a basic computer**. The most basic computer consists of a `CPU`, `RAM` and `ROM`. `ROM` is used to provide instructions, `CPU` executes said instructions and `RAM` stores the results of those instructions. Since those are required components of any computer, those also are the most interwoven together elements of a GameBoy. Everything else like screen, buttons or speakers is considered peripherals and therefore is less integrated with the core system.
+For all intents and purposes, **Game Boy is a basic computer**. The most basic computer consists of a `CPU`, `RAM` and `ROM`. `ROM` is used to provide instructions, `CPU` executes said instructions and `RAM` stores the results of those instructions. Since those are required components of any computer, those also are the most interwoven together elements of a Game Boy. Everything else like screen, buttons or speakers is considered peripherals and therefore is less integrated with the core system.
 
 ![Basic computer architecture](./assets/Von_Neumann_Architecture.png)
 
@@ -111,7 +111,7 @@ I mean, I knew it's Tetris since I was the one to provide myself with the rom du
 > [!NOTE]
 > Tetris is generally considered a great test game. It's one of the earliest games and so it's pretty simplistic. Because of that, it doesn't have any of the fancy features a game cartridge could have.
 
-It's worth noting that the Nintendo logo is not stored in the actual tile format GameBoy would usually utilize. It's compressed to <kbd>4x4</kbd> pixels per tile <kbd>1-bit</kbd> per pixel format. So every tile is represented by only two bytes. Those later on get upscaled and converted to the correct <kbd>8x8</kbd> tile format by the `boot rom`:
+It's worth noting that the Nintendo logo is not stored in the actual tile format Game Boy would usually utilize. It's compressed to <kbd>4x4</kbd> pixels per tile <kbd>1-bit</kbd> per pixel format. So every tile is represented by only two bytes. Those later on get upscaled and converted to the correct <kbd>8x8</kbd> tile format by the `boot rom`:
 
 ![Logo Decoding](./assets/LogoDecoding.png)
 
@@ -146,10 +146,10 @@ Okay, fun's over, let the fun begin. Now we're getting to some more complex stuf
 ### CPU registers 🧾
 
 > [!NOTE]
-> Quickly before we start! Technically GameBoy's CPU is a full-blown [SoC](https://en.wikipedia.org/wiki/System_on_a_chip) aka `System on Chip` because it houses quite a few other components like a `boot ROM`, a few `SRAM` regions and an `APU`. But for simplicity I'll keep calling it a CPU. It's even labeled as "DMG-CPU" after all.
+> Quickly before we start! Technically Game Boy's CPU is a full-blown [SoC](https://en.wikipedia.org/wiki/System_on_a_chip) aka `System on Chip` because it houses quite a few other components like a `boot ROM`, a few `SRAM` regions and an `APU`. But for simplicity I'll keep calling it a CPU. It's even labeled as "DMG-CPU" after all.
 
 DMG-CPU has 10 different registers: `A B C D E F H L SP PC`. Single letter registers are <kbd>8-bit</kbd> and double letter registers are <kbd>16-bit</kbd>. That means they can hold 8 and 16 bits of information respectively. You also can combine single letter registers into the following double letter 16-bit registers: `AF BC DE HL`.<br>
-All of the above is actually the entirety of GameBoy's brain, really. At least it's all of the data processor can hold on its own - 12 bytes of data and that's that. 
+All of the above is actually the entirety of Game Boy's brain, really. At least it's all of the data processor can hold on its own - 12 bytes of data and that's that. 
 
 > [!NOTE]
 > Granted, 12B is all it has only in terms of registers and by saying that we ignore `HRAM`, `OAM` and `Wave RAM`. But those are just SRAM regions of the SoC that have little to do with the arithmetics it performs. So we don't really have to concern ourselves with that just now.
@@ -167,9 +167,9 @@ The general way programs work with registers is the following:
 3) Store the result into RAM
 
 And that's how eventually you get an image on your screen.<br>
-You might have noticed `HL`, `SP` and `PC` are commonly used to point to addresses. It's because GameBoy has a <kbd>16-bit address space</kbd>. It means it only has a <kbd>2^16</kbd> aka <kbd>64KB</kbd> of available memory to work with. That includes both RAM, ROM and I/O. It's actually quite complicated and you can even access more than 64KB, but we didn't get there just yet.
+You might have noticed `HL`, `SP` and `PC` are commonly used to point to addresses. It's because Game Boy has a <kbd>16-bit address space</kbd>. It means it only has a <kbd>2^16</kbd> aka <kbd>64KB</kbd> of available memory to work with. That includes both RAM, ROM and I/O. It's actually quite complicated and you can even access more than 64KB, but we didn't get there just yet.
 
-You might have heard that **GameBoy is an 8-bit system** and so it has an <kbd>8-bit</kbd> processor. But you clearly saw it make use of 16-bit registers just now! But don't you worry, you weren't lied to. Game brick's CPU is indeed 8-bit since it was designed to perform operations on 8-bit registers. The 16-bit registers were a necessity to have a larger  address space and CPU is actually faking 16-bit operations to the best of it's ability using `F` register as a crutch.
+You might have heard that **Game Boy is an 8-bit system** and so it has an <kbd>8-bit</kbd> processor. But you clearly saw it make use of 16-bit registers just now! But don't you worry, you weren't lied to. Game brick's CPU is indeed 8-bit since it was designed to perform operations on 8-bit registers. The 16-bit registers were a necessity to have a larger  address space and CPU is actually faking 16-bit operations to the best of it's ability using `F` register as a crutch.
 
 Back on track, you can read more on the registers for example [here on Pan Docs](https://gbdev.io/pandocs/CPU_Registers_and_Flags.html).
 
@@ -268,7 +268,7 @@ If you remember the basic computer model I've shown previously, you might see si
 
 ![DMG memory scheme](./assets/DMG-memory.png)
 
-Here you can see the memory chips marked directly on the GameBoy circuit board:
+Here you can see the memory chips marked directly on the Game Boy circuit board:
 
 ![DMG internal chips scheme](./assets/DMG-internals.png)
 
@@ -282,7 +282,7 @@ Last thing! It's also worth noting that the the `boot rom` (think of it as bios)
 
 Boot rom is the first big milestone. If you can run it, that means you have something functional already. At least it was my personal first big goal for sure. You don't even have to render the graphics, but simply log the CPU state to make sure everything works as expected.
 
-Boot rom is a small 256B program GameBoy runs on every boot and it does a few simple things:
+Boot rom is a small 256B program Game Boy runs on every boot and it does a few simple things:
    1) Initialize the hardware
    2) Draw the logo and scroll it down
    3) Play the startup chime: "da-ding!"
@@ -307,7 +307,7 @@ These are the two instructions that are responsible for unloading the boot rom. 
 
 Even though it's not too important for you to know, I want to tell you a short story. It's a story about the way boot rom was extracted, reverse-engineered and dumped.
 
-As I've already mentioned, boot rom is located directly on the CPU die. To get to the boot rom you have to carefully remove the top protective layer of GameBoy's CPU to reveal the circuit underneath. Then you have to look at it under a microscope and find the section dedicated to the boot rom. As you can see on the following picture, boot rom section is a blue rectangle marked <kbd>256 Bytes</kbd>.
+As I've already mentioned, boot rom is located directly on the CPU die. To get to the boot rom you have to carefully remove the top protective layer of Game Boy's CPU to reveal the circuit underneath. Then you have to look at it under a microscope and find the section dedicated to the boot rom. As you can see on the following picture, boot rom section is a blue rectangle marked <kbd>256 Bytes</kbd>.
 
 Speaking of sections, you can also see the ALU! There's also <kbd>127B</kbd> of `HRAM` + <kbd>1B</kbd> of `IE register` at the end resulting into <kbd>128 bytes</kbd> total. Those two <kbd>80 byte</kbd> regions are dedicated to `OAM`. Lastly, the remaining <kbd>16 bytes</kbd> of SRAM seems to be `Wave RAM` related to audio playback.
 
@@ -367,18 +367,18 @@ But to do it properly we'd have to implement a simple `Pixel Processing Unit` st
 Basically PPU runs in parallel with the CPU and re-renders every <kbd>70224 T-cycles</kbd>. ~~To make it more clear, imagine a bus stop.~~ **This is a good time to remember that every OpCode takes a certain amount of ***M-cycles*** to execute.** At least that's the values you'd find in the OpCode table. Every *M-cycle* equals exactly 4 *T-cycles*, so it's a pretty trivial conversion.
 
 > [!NOTE]
-> You might have heard that GameBoy is a <kbd>4MHz</kbd> system, but that's somewhat a lie. In reality calling it a <kbd>1MHz</kbd> machine would be closer to the actual truth. This confusion has a lot to do with distinguishing between T-cycles and M-cycles.
+> You might have heard that Game Boy is a <kbd>4MHz</kbd> system, but that's somewhat a lie. In reality calling it a <kbd>1MHz</kbd> machine would be closer to the actual truth. This confusion has a lot to do with distinguishing between T-cycles and M-cycles.
 >
 > Even though technically CPU is indeed clocked at <kbd>4MHz</kbd>, every OpCode always takes an amount of T-cycles divisible by 4. So any given command takes at least 4 T-cycles to execute, therefore the CPU event theoretically couldn't perform even close to 4 million operations per second. But that being said, some things do indeed happen with T-cycle accuracy and it even completely brakes some games.
 >
 > To sum it up:
 > 
->   - **Tick-cycle** aka T-cycle: represents the smallest unit of time in the GameBoy's CPU.
+>   - **Tick-cycle** aka T-cycle: represents the smallest unit of time in the Game Boy's CPU.
 >
 >   - **Memory-cycle** aka M-cycle: represents a higher-level unit
-of time used by the GameBoy's CPU for executing instructions and equals 4 T-cycles. It's called that because the memory bus is clocked at <kbd>1Mhz</kbd>, so exactly 4 times slower than the CPU.
+of time used by the Game Boy's CPU for executing instructions and equals 4 T-cycles. It's called that because the memory bus is clocked at <kbd>1Mhz</kbd>, so exactly 4 times slower than the CPU.
 
-Let's do some math. Generally speaking GameBoy PPU replicates the way a CRT would work. It draws pixels line by line top to bottom and it takes a certain amount of cycles. `OAM scan` takes <kbd>80 T-cycles</kbd>, `Pixel Transfer` takes <kbd>172 T-cycles</kbd> and `HBlank` takes another <kbd>204 T-cycles</kbd>. That's <kbd>456 T-cycles</kbd> per horizontal line in total! Multiply it by screen height and add the additional <kbd>10</kbd> pseudo-scanlines of `VBlank` and you'll get the desired <kbd>456 * (144+10) = 70224 T-cycles</kbd>.
+Let's do some math. Generally speaking Game Boy PPU replicates the way a CRT would work. It draws pixels line by line top to bottom and it takes a certain amount of cycles. `OAM scan` takes <kbd>80 T-cycles</kbd>, `Pixel Transfer` takes <kbd>172 T-cycles</kbd> and `HBlank` takes another <kbd>204 T-cycles</kbd>. That's <kbd>456 T-cycles</kbd> per horizontal line in total! Multiply it by screen height and add the additional <kbd>10</kbd> pseudo-scanlines of `VBlank` and you'll get the desired <kbd>456 * (144+10) = 70224 T-cycles</kbd>.
 
 Now you might be wondering why is this section called "***Faking*** the screen". The info here seems pretty in-depth, right? It's because The number of cycles we just so happily calculated is a lie. I mean, it's not exactly a lie. The number is correct and it's the actual refresh rate, but there's still some more nuance to it. In reality, even though each line indeed takes <kbd>456 T-cycles</kbd> to process, `Pixel Transfer` takes <kbd>between 172 and 289 T-cycles</kbd> and `HBlank` fills the rest, so that both result in <kbd>376 T-cycles</kbd> total. The `Pixel FIFO` is responsible for that variance and I'm not going to implement it yet. That's the way we fake it - by omitting an important part of the system. With all that said, the simplest of state machines would do for now:
 
@@ -431,10 +431,10 @@ pub fn tick(&mut self, t_cycles: u8) {
 }
 ```
 
-For rendering you also need to keep a few more things in mind. GameBoy doesn't actually have a framebuffer you would expect if you're familiar with modern graphics rendering process. The first Nintendo console to utilize a framebuffer would be [Nintendo 64](https://www.youtube.com/watch?v=pFlcqWQVVuU) and that one came out full 7 years later.<br>
-Instead it uses a combination of a tile set and a tile map. `Tile` is a single tiny <kbd>8x8</kbd> pixels image. GameBoy heavily relies on those little fellas to draw graphics. `Tile set` is a memory location that stores all of the different tiles a game uses at the moment. And `tile map` is a memory location filled with IDs of tiles in the tile set arranged in a way we'd want to see them on screen.
+For rendering you also need to keep a few more things in mind. Game Boy doesn't actually have a framebuffer you would expect if you're familiar with modern graphics rendering process. The first Nintendo console to utilize a framebuffer would be [Nintendo 64](https://www.youtube.com/watch?v=pFlcqWQVVuU) and that one came out full 7 years later.<br>
+Instead it uses a combination of a tile set and a tile map. `Tile` is a single tiny <kbd>8x8</kbd> pixels image. Game Boy heavily relies on those little fellas to draw graphics. `Tile set` is a memory location that stores all of the different tiles a game uses at the moment. And `tile map` is a memory location filled with IDs of tiles in the tile set arranged in a way we'd want to see them on screen.
 
-For boot rom we only need to care about drawing the `Background tile map 0`. GameBoy looks at the respective location in the memory and gets a tile ID. Then, according to that ID, it gets the correct tile from the tile set and draws it.<br>
+For boot rom we only need to care about drawing the `Background tile map 0`. Game Boy looks at the respective location in the memory and gets a tile ID. Then, according to that ID, it gets the correct tile from the tile set and draws it.<br>
 And lastly, `SCY` value at `0xFF42` and `SCX` value at `0xFF43` are used for vertical and horizontal scrolling respectfully. Boot rom writes to `0xFF42` to control vertical scrolling.<br>
 Fun fact: heavy utilization of tiles will prevail in Nintendo handhelds up Nintendo DS!
 
@@ -605,7 +605,7 @@ Seeing the copyright for half a second is cool and all, but otherwise I had no i
 
 With that little hack added I was already able to get to the main menu. That's quite amazing! But how do buttons *actually* work?
 
-**GameBoy has 8 different buttons** and internally groups D-pad and the rest of the buttons into two separate sets. It uses 4 I/O pins `P10-P13` to read button state and 2 more pins `P14` and `P15` to select which set of buttons is currently being read. The buttons are arranged in the following manner creating a 2×4 matrix:
+**Game Boy has 8 different buttons** and internally groups D-pad and the rest of the buttons into two separate sets. It uses 4 I/O pins `P10-P13` to read button state and 2 more pins `P14` and `P15` to select which set of buttons is currently being read. The buttons are arranged in the following manner creating a 2×4 matrix:
 
 | P15               | P14              |
 | :---------------: | :--------------: |
@@ -614,7 +614,7 @@ With that little hack added I was already able to get to the main menu. That's q
 | <kbd>B</kbd>      | <kbd>Left</kbd>  |
 | <kbd>A</kbd>      | <kbd>Right</kbd> |
 
-Grouping buttons into separate sets like that in electronics is called multiplexing. It allows to use I/O more efficiently by reducing the amount of pins needed to read the state. In the case of GameBoy it reduces whopping 8 pins we'd otherwise use to just 6, hence only saving us 2 pins. Doesn't sound too impressive, but I'm really not gonna question Nintendo engineers technical decisions.
+Grouping buttons into separate sets like that in electronics is called multiplexing. It allows to use I/O more efficiently by reducing the amount of pins needed to read the state. In the case of Game Boy it reduces whopping 8 pins we'd otherwise use to just 6, hence only saving us 2 pins. Doesn't sound too impressive, but I'm really not gonna question Nintendo engineers technical decisions.
 
 Let's solve the inverted values mystery now. In terms of the actual hardware `P10-P13`are internally tied to Vcc through a pull up resistor. This way they get <kbd>5V</kbd> on idle and pretty straightforwardly interpret it as a logical <kbd>1</kbd>. You can read those pins from software. On the other hand, pins `P14` and `P15` state can be written from software and this way their output could be altered from <kbd>5V</kbd> to <kbd>0V</kbd>. Once one of them is set to logical <kbd>0</kbd>, it also pulls buttons low if their switches complete the circuit therefore making their respective pins read <kbd>0</kbd> as well.
 
@@ -680,7 +680,7 @@ Here you might notice I've passed the interrupt test and it's all thanks to our 
 
 **Interrupts are hardware events that trigger software effects.**
 
-Interrupts are getting processed on a CPU tick when specific registers bits are set and CPU isn't currently mid-executing an instruction. It's a crucial tool for programmers to make software effects happen on certain hardware events. When interrupt is being registered by a CPU, CPU jumps to an address associated with that interrupt. There are 5 different types of GameBoy interrupts:
+Interrupts are getting processed on a CPU tick when specific registers bits are set and CPU isn't currently mid-executing an instruction. It's a crucial tool for programmers to make software effects happen on certain hardware events. When interrupt is being registered by a CPU, CPU jumps to an address associated with that interrupt. There are 5 different types of Game Boy interrupts:
 
 | Name       | Address         | Requested on                                        |
 | ---------: | :-------------: | --------------------------------------------------- |
@@ -702,7 +702,7 @@ And then hardware can request interrupts via interrupt flag register at `0xFF0F`
 > | :---: | :----: | :----: |:----: | :--: | :----: |
 > | -     | Joypad | Serial | Timer | STAT | VBlank |
 
-As you can see they have the exact same signature and so the GameBoy can perform a pending check pretty trivially:
+As you can see they have the exact same signature and so the Game Boy can perform a pending check pretty trivially:
 
 ```rust
 let pending: bool = (memory[0xFFFF] & memory[0xFF0F]) != 0;
