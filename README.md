@@ -28,8 +28,9 @@ I'm Noelle Stern and on this page I want to tell a story of building [my own coz
   - [Brick 6 - Advanced architecture 🚀](#brick-6---advanced-architecture-)
 
 [![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org/)
-![WebAssembly](https://img.shields.io/badge/webassembly-%23654FF0.svg?style=for-the-badge&logo=webassembly&logoColor=white)<br>
-![WebGPU](https://img.shields.io/badge/WebGPU-enabled-blue?logo=webgpu)
+[![PWA](https://img.shields.io/badge/pwa-%235a06c9.svg?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/explore/progressive-web-apps)
+[![WebAssembly](https://img.shields.io/badge/webassembly-%23654FF0.svg?style=for-the-badge&logo=webassembly&logoColor=white)](https://webassembly.org/)<br>
+[![WebGPU](https://img.shields.io/badge/WebGPU-enabled-blue?logo=webgpu)](https://webgpu.org/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 ## How did I even end up here? 📍
