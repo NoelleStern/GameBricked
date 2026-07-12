@@ -9,7 +9,8 @@
 
 use color_eyre::eyre;
 
-use crate::emu::{processor::instruction_info::InstInfo, rendering::{palette::RawPalette, ppu::{Tile, RawShade}}};
+use crate::emu::{processor::instruction_info::InstInfo, rendering::{palette::RawPalette, ppu::{RawShade, Tile}}};
+
 
 /// Header read error
 const ROM_SHORT_ERROR: &str = "ROM too short for header";
@@ -28,6 +29,37 @@ const HEADER_BEGIN: usize = 0x0134;
 const HEADER_END: usize = 0x014C;
 
 
+pub struct CartridgeType {
+    mapper: Mapper,
+    sensor: bool,
+    rumble: bool,
+    timer: bool,
+    ram: bool,
+    battery: bool,
+    description: String,
+}
+impl CartridgeType {
+    pub fn new(mapper: Mapper, sensor: bool, rumble: bool, timer: bool, ram: bool, battery: bool, description: &str) -> Self {
+        Self { mapper, ram, battery, timer, rumble, sensor, description: description.to_owned() }
+    }
+}
+
+pub enum Mapper {
+    None,
+    Mbc1,
+    Mbc2,
+    Mbc3,
+    Mbc5,
+    Mbc6,
+    Mbc7,
+    Mmm01,
+    Tama5,
+    HuC1,
+    HuC3,
+    Camera,
+    Undefined
+}
+
 pub struct Header {
     /// Entry point disassembly
     pub entry: String,
@@ -43,7 +75,7 @@ pub struct Header {
     /// Super GameBoy support
     pub sgb: bool,
     /// Contains important mapper info
-    pub cartridge_type: String,
+    pub cartridge_type: CartridgeType,
     /// ROM size in banks (16KB each)
     pub rom_size: u8,
     /// RAM size in KB
@@ -90,20 +122,20 @@ impl Header {
             .collect::<Vec<String>>().join(" ");
 
         [
-            format!("Entry: {}",                self.entry              ),
-            format!("Logo: \r\n{}",             self.printable_logo()   ),
-            format!("Title: \"{}\"",            self.title              ),
-            format!("Manufacturer: {}",         manufacturer_hex        ),
-            format!("CGB: {:02X}",              self.cgb                ),
-            format!("SGB: {}",                  self.sgb                ),
-            format!("Cartridge Type: {}",       self.cartridge_type     ),
-            format!("ROM Size: {} Banks",       self.rom_size as u16 * 2), // Convert to u16 just in case
-            format!("RAM Size: {} KB",          self.ram_size           ),
-            format!("Destination: \"{}\"",      self.destination        ),
-            format!("Licensee: \"{}\"",         self.licensee           ),
-            format!("Version Number: {:02X}",   self.version_number     ),
-            format!("Header Checksum: {}",      self.header_checksum    ),
-            format!("Global Checksum: {}",      self.global_checksum    ),
+            format!("Entry: {}",                self.entry                     ),
+            format!("Logo: \r\n{}",             self.printable_logo()          ),
+            format!("Title: \"{}\"",            self.title                     ),
+            format!("Manufacturer: {}",         manufacturer_hex               ),
+            format!("CGB: {:02X}",              self.cgb                       ),
+            format!("SGB: {}",                  self.sgb                       ),
+            format!("Cartridge Type: {}",       self.cartridge_type.description),
+            format!("ROM Size: {} Banks",       self.rom_size as u16 * 2       ), // Convert to u16 just in case
+            format!("RAM Size: {} KB",          self.ram_size                  ),
+            format!("Destination: \"{}\"",      self.destination               ),
+            format!("Licensee: \"{}\"",         self.licensee                  ),
+            format!("Version Number: {:02X}",   self.version_number            ),
+            format!("Header Checksum: {}",      self.header_checksum           ),
+            format!("Global Checksum: {}",      self.global_checksum           ),
         ].join("\n")
     }
     pub fn printable_logo(&self) -> String {
@@ -149,38 +181,38 @@ impl Header {
         Ok(clean)
     }
     pub fn get_sgb(value: u8) -> bool { value == 0x03 }
-    pub fn get_cartridge_type(value: u8) -> String {
+    pub fn get_cartridge_type(value: u8) -> CartridgeType {
         match value {
-            0x00 => "ROM ONLY",
-            0x01 => "MBC1",
-            0x02 => "MBC1+RAM",
-            0x03 => "MBC1+RAM+BATTERY",
-            0x05 => "MBC2",
-            0x06 => "MBC2+BATTERY",
-            0x08 => "ROM+RAM 11",
-            0x09 => "ROM+RAM+BATTERY 11",
-            0x0B => "MMM01",
-            0x0C => "MMM01+RAM",
-            0x0D => "MMM01+RAM+BATTERY",
-            0x0F => "MBC3+TIMER+BATTERY",
-            0x10 => "MBC3+TIMER+RAM+BATTERY 12",
-            0x11 => "MBC3",
-            0x12 => "MBC3+RAM 12",
-            0x13 => "MBC3+RAM+BATTERY 12",
-            0x19 => "MBC5",
-            0x1A => "MBC5+RAM",
-            0x1B => "MBC5+RAM+BATTERY",
-            0x1C => "MBC5+RUMBLE",
-            0x1D => "MBC5+RUMBLE+RAM",
-            0x1E => "MBC5+RUMBLE+RAM+BATTERY",
-            0x20 => "MBC6",
-            0x22 => "MBC7+SENSOR+RUMBLE+RAM+BATTERY",
-            0xFC => "POCKET CAMERA",
-            0xFD => "BANDAI TAMA5",
-            0xFE => "HuC3",
-            0xFF => "HuC1+RAM+BATTERY",
-            _ => "",
-        }.to_string()
+            0x00 => CartridgeType::new(Mapper::None,        false, false, false, false, false, "ROM ONLY"                      ),
+            0x01 => CartridgeType::new(Mapper::Mbc1,        false, false, false, false, false, "MBC1"                          ),
+            0x02 => CartridgeType::new(Mapper::Mbc1,        false, false, false,  true, false, "MBC1+RAM"                      ),
+            0x03 => CartridgeType::new(Mapper::Mbc1,        false, false, false,  true,  true, "MBC1+RAM+BATTERY"              ),
+            0x05 => CartridgeType::new(Mapper::Mbc2,        false, false, false, false, false, "MBC2"                          ),
+            0x06 => CartridgeType::new(Mapper::Mbc2,        false, false, false, false,  true, "MBC2+BATTERY"                  ),
+            0x08 => CartridgeType::new(Mapper::None,        false, false, false,  true, false, "ROM+RAM"                       ),
+            0x09 => CartridgeType::new(Mapper::None,        false, false, false,  true,  true, "ROM+RAM+BATTERY"               ),
+            0x0B => CartridgeType::new(Mapper::Mmm01,       false, false, false, false, false, "MMM01"                         ),
+            0x0C => CartridgeType::new(Mapper::Mmm01,       false, false, false,  true, false, "MMM01+RAM"                     ),
+            0x0D => CartridgeType::new(Mapper::Mmm01,       false, false, false,  true,  true, "MMM01+RAM+BATTERY"             ),
+            0x0F => CartridgeType::new(Mapper::Mbc3,        false, false,  true, false,  true, "MBC3+TIMER+BATTERY"            ),
+            0x10 => CartridgeType::new(Mapper::Mbc3,        false, false,  true,  true,  true, "MBC3+TIMER+RAM+BATTERY"        ),
+            0x11 => CartridgeType::new(Mapper::Mbc3,        false, false, false, false, false, "MBC3"                          ),
+            0x12 => CartridgeType::new(Mapper::Mbc3,        false, false, false,  true, false, "MBC3+RAM"                      ),
+            0x13 => CartridgeType::new(Mapper::Mbc3,        false, false, false,  true,  true, "MBC3+RAM+BATTERY"              ),
+            0x19 => CartridgeType::new(Mapper::Mbc5,        false, false, false, false, false, "MBC5"                          ),
+            0x1A => CartridgeType::new(Mapper::Mbc5,        false, false, false,  true, false, "MBC5+RAM"                      ),
+            0x1B => CartridgeType::new(Mapper::Mbc5,        false, false, false,  true,  true, "MBC5+RAM+BATTERY"              ),
+            0x1C => CartridgeType::new(Mapper::Mbc5,        false,  true, false, false, false, "MBC5+RUMBLE"                   ),
+            0x1D => CartridgeType::new(Mapper::Mbc5,        false,  true, false,  true, false, "MBC5+RUMBLE+RAM"               ),
+            0x1E => CartridgeType::new(Mapper::Mbc5,        false,  true, false,  true,  true, "MBC5+RUMBLE+RAM+BATTERY"       ),
+            0x20 => CartridgeType::new(Mapper::Mbc6,        false, false, false, false, false, "MBC6"                          ),
+            0x22 => CartridgeType::new(Mapper::Mbc7,        true,  true, false,   true,  true, "MBC7+SENSOR+RUMBLE+RAM+BATTERY"),
+            0xFC => CartridgeType::new(Mapper::Camera,      false, false, false, false, false, "POCKET CAMERA"                 ),
+            0xFD => CartridgeType::new(Mapper::Tama5,       false, false, false, false, false, "BANDAI TAMA5"                  ),
+            0xFE => CartridgeType::new(Mapper::HuC3,        false, false, false, false, false, "HuC3"                          ),
+            0xFF => CartridgeType::new(Mapper::HuC1,        false, false, false,  true,  true, "HuC1+RAM+BATTERY"              ),
+            _ =>    CartridgeType::new(Mapper::Undefined,   false, false, false, false, false, "UNDEFINED"                     ),
+        }
     }
     pub fn get_rom_size(value: u8) -> u8 { (1 << value) * 2 }
     pub fn get_ram_size(value: u8) -> u8 {
